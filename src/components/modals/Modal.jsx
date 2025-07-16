@@ -1,7 +1,7 @@
 import { useImperativeHandle, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
-export const Modal = ({ ref, header, content, footer }) => {
+export const Modal = ({ ref, header, content, footer, width = '50%', height='50%', closeOnBackdropClick }) => {
   const modalRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -39,8 +39,9 @@ export const Modal = ({ ref, header, content, footer }) => {
   return createPortal(
     <dialog
       ref={modalRef}
-      onClick={handleBackdropClick}
-      className="backdrop:bg-slate-900/70 absolute z-50 w-1/2 h-1/2 text-green-900 rounded-xl"
+      onClick={closeOnBackdropClick ? handleBackdropClick : undefined}
+      className="backdrop:bg-slate-900/70 absolute z-50text-green-900 rounded-xl overflow-hidden"
+      style={{ width, height }}
     >
       <div ref={contentRef} className="h-full">
         {header}

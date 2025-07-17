@@ -1,18 +1,35 @@
 import { VARIANT } from '../../constants/styles';
+import clsx from 'clsx';
 
-export const Button = ({ variant = VARIANT.default, fullWidth = false, className, children, ...props }) => {
-  let buttonStyles = '';
-  const defaultStyles =
-    'bg-slate-800 text-slate-50 hover:bg-slate-700 ease-in duration-200 font-semibold rounded py-2 px-5 active:translate-y-0.5';
-  const outlineStyles = 'border border-slate-800 text-slate-800 hover:bg-slate-200 ease-in duration-200 font-semibold py-2 px-5 rounded';
+const base =
+  'inline-flex items-center justify-center font-semibold py-2 px-5 rounded transition-all duration-200';
 
-  if (variant === VARIANT.default) buttonStyles = defaultStyles;
-  if (variant === VARIANT.outline) buttonStyles = outlineStyles;
-  if (fullWidth) buttonStyles += ' w-full';
-  if (className) buttonStyles += ` ${className}`;
+const variantClasses = {
+  [VARIANT.default]:
+    'bg-slate-800 text-slate-50 hover:bg-slate-700 active:translate-y-0.5',
+  [VARIANT.outline]:
+    'border border-slate-800 text-slate-800 hover:bg-slate-200',
+  [VARIANT.danger]:
+    'bg-red-500 text-slate-50 hover:bg-red-700 active:translate-y-0.5',
+};
 
+export const Button = ({
+  variant = VARIANT.default,
+  fullWidth = false,
+  className,
+  children,
+  ...props
+}) => {
   return (
-    <button {...props} className={buttonStyles}>
+    <button
+      {...props}
+      className={clsx(
+        base,
+        fullWidth ? 'w-full' : 'max-w-max',
+        variantClasses[variant],
+        className
+      )}
+    >
       {children}
     </button>
   );

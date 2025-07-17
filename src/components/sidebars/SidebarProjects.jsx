@@ -1,4 +1,4 @@
-import { Sidebar } from "./Sidebar";
+import { Sidebar } from './Sidebar';
 
 export const SidebarProjects = ({ items, currItem, setCurrItem, onAdd }) => {
   return (
@@ -11,16 +11,20 @@ export const SidebarProjects = ({ items, currItem, setCurrItem, onAdd }) => {
       </button>
       <ul>
         {items.map(project => (
-          <li key={project} className="mb-3">
+          <li key={project.name} className="mb-3">
             <button
               className={`text-slate-50 w-full text-left rounded p-3 ease-in duration-200 ${
-                project === currItem
+                project.name === currItem?.name
                   ? 'bg-slate-50 text-slate-900 font-bold'
                   : ''
               }`}
-              onClick={() => setCurrItem(project)}
+              onClick={() =>
+                setCurrItem(prevProject =>
+                  prevProject === project ? null : project
+                )
+              }
             >
-              {project}
+              {project.name}
             </button>
           </li>
         ))}

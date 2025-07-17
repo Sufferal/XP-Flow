@@ -1,9 +1,4 @@
 /**
- * Formats a Date object into a `YYYY-MM-DD` string, with leading zeros.
- *
- * @param {Date} date - The Date object to format.
- * @returns {string} The formatted date string, e.g. `"2025-07-16"`.
- *
  * @example
  * const someDate = new Date(2025, 6, 16); // July 16, 2025 (months are 0-based)
  * const formatted = formatDate(someDate);
@@ -17,10 +12,6 @@ export const formatDate = date => {
 };
 
 /**
- * Returns the current date in `YYYY-MM-DD` format (with leading zeros).
- *
- * @returns {string} The current date string, e.g. `"2025-07-16"` for July 16, 2025.
- *
  * @example
  * const today = getCurrentDate();
  * console.log(today); // "2025-07-16"
@@ -30,11 +21,6 @@ export const getCurrentDate = () => {
 };
 
 /**
- * Returns a date string `YYYY-MM-DD` for a date N years from today.
- *
- * @param {number} years - The number of years to add to the current date.
- * @returns {string} The resulting future date in `YYYY-MM-DD` format.
- *
  * @example
  * const fiveYearsLater = getYearDate(5);
  * console.log(fiveYearsLater); // e.g. "2030-07-16"
@@ -43,4 +29,21 @@ export const getYearDate = years => {
   const date = new Date();
   date.setFullYear(date.getFullYear() + years);
   return formatDate(date);
+};
+
+// console.log(getMonthName("07")); // → July
+// console.log(getMonthName("07", "fr-FR")); // → juillet
+export const getMonthName = (monthStr, locale = 'en-US') => {
+  const date = new Date(2000, parseInt(monthStr, 10) - 1, 1);
+  return new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+};
+
+export const formatDeadline = (deadline = '') => {
+  return deadline
+    .split('-')
+    .reverse()
+    .map((el, index) => {
+      return index === 1 ? `${getMonthName(el)}, ` : el;
+    })
+    .join(' ');
 };

@@ -1,15 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { NoProjectSelected } from './components/projects/NoProjectSelected';
 import { SidebarProjects } from './components/sidebars/SidebarProjects';
 import { ProjectAddModal } from './components/modals/ProjectAddModal';
 import { Project } from './components/projects/Project';
-import { formatDeadline } from './utils/date';
 import { LS_PROJECTS } from './constants';
+import { v4 as uuidv4 } from 'uuid';
+import { useEffect } from 'react';
 
 function App() {
   const [projects, setProjects] = useState(
     JSON.parse(localStorage.getItem(LS_PROJECTS)) ?? [
       {
+        id: uuidv4(),
         name: 'Today',
         desc: `The only moment where karma is truly created. It is cause and effect in motion. Every thought, every word, every action plants a seed. 
       What you choose today determines what you'll experience tomorrow.
@@ -23,29 +25,22 @@ function App() {
   );
   const addProjectRef = useRef(null);
 
+  // Modal handler
   const addProjectHandler = () => addProjectRef.current.open();
-  const handleProjectAdd = e => {
-    e.preventDefault();
 
-    const formEl = e.target;
-    const fd = new FormData(formEl);
-
-    const data = Object.fromEntries(fd.entries());
-    const newProject = {
-      name: data.name,
-      desc: data.desc,
-      deadline: formatDeadline(data.deadline),
-    };
-
+  // Project operations
+  const handleProjectAdd = newProject => {
     setProjects(prevProjects => [...prevProjects, newProject]);
     setCurrentProject(newProject);
-
-    setTimeout(() => {
-      formEl.reset();
-      localStorage.setItem(LS_PROJECTS, JSON.stringify([...projects, newProject]))
-    }, 300);
-
     addProjectRef.current.close();
+  };
+
+  const handleProjectEdit = updProject => {
+    const newProjects = projects.map(p =>
+      p.id === updProject.id ? updProject : p
+    );
+    setProjects(newProjects);
+    setCurrentProject(updProject);
   };
 
   const handleProjectDelete = name => {
@@ -53,7 +48,11 @@ function App() {
     setProjects(newProjects);
     setCurrentProject(null);
   };
-  
+
+  useEffect(() => {
+    localStorage.setItem(LS_PROJECTS, JSON.stringify(projects));
+  }, [projects]);
+
   return (
     <>
       <ProjectAddModal ref={addProjectRef} onSubmit={handleProjectAdd} />
@@ -72,7 +71,11 @@ function App() {
           {!currentProject && <NoProjectSelected onClick={addProjectHandler} />}
           {currentProject && (
             <div className="mt-10 ml-10">
-              <Project {...currentProject} onDelete={handleProjectDelete} />
+              <Project
+                item={currentProject}
+                onEdit={handleProjectEdit}
+                onDelete={handleProjectDelete}
+              />
             </div>
           )}
         </section>

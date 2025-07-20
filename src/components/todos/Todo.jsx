@@ -1,0 +1,106 @@
+import { useRef, useEffect, useState } from 'react';
+import { Button } from '../buttons/Button';
+import { Input } from '../inputs/Input';
+import { DeleteIcon } from '../icons/DeleteIcon';
+import { VARIANT } from '../../constants/styles';
+import { EditIcon } from '../icons/EditIcon';
+import { SaveIcon } from '../icons/SaveIcon';
+
+const Todo = ({ todo, onEdit, onDelete }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(todo.isCompleted || false);
+  const [newTodo, setNewTodo] = useState('');
+  const editInputRef = useRef(null);
+
+  const handleToggleCompleted = () => {
+    setIsCompleted(prev => !prev);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(prevEdit => !prevEdit);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (newTodo) {
+      onEdit({
+        ...todo,
+        name: newTodo,
+      });
+    }
+    setIsEditing(prevEdit => !prevEdit);
+  };
+
+  useEffect(() => {
+    console.log('todo.isCompleted', todo.isCompleted);
+    console.log('isCompleted', isCompleted);
+    console.log('difference', isCompleted !== todo.isCompleted);
+    console.log('asdfasdf');
+    if (todo.isCompleted !== isCompleted) {
+      onEdit({ ...todo, isCompleted });
+    }
+  }, [isCompleted]);
+
+  useEffect(() => {
+    if (isEditing && editInputRef.current) {
+      editInputRef.current.focus();
+    }
+  }, [isEditing]);
+
+  return (
+    <li className="flex items-center gap-2">
+      <div className="mr-3">
+        <Input
+          id={todo.id}
+          type="checkbox"
+          checked={isCompleted}
+          onChange={handleToggleCompleted}
+        />
+      </div>
+      {isCompleted ? (
+        <p
+          className="italic font-semibold bg-slate-900 text-white w-full rounded px-2 py-1 cursor-pointer"
+          onClick={handleToggleCompleted}
+        >
+          {todo.name}
+        </p>
+      ) : isEditing ? (
+        <div className="w-full flex justify-between gap-2">
+          <form className="flex-grow" onSubmit={handleSubmit}>
+            <Input
+              ref={editInputRef}
+              value={newTodo}
+              onChange={e => setNewTodo(e.target.value)}
+            />
+          </form>
+          <Button variant={VARIANT.icon} onClick={handleSubmit}>
+            <SaveIcon width="16px" height="16px" color="#0F172A" />
+          </Button>
+        </div>
+      ) : (
+        <div className="w-full flex items-center justify-between">
+          <h2
+            className="font-semibold cursor-pointer"
+            onClick={handleToggleCompleted}
+          >
+            {todo.name}
+          </h2>
+          <div className="flex items-center gap-1">
+            <Button variant={VARIANT.icon} onClick={handleEdit}>
+              <EditIcon width="24px" height="24px" color="#0F172A" />
+            </Button>
+            <Button
+              variant={VARIANT.icon}
+              onClick={onDelete}
+              className="[&:hover>svg]:fill-red-500"
+            >
+              <DeleteIcon width="24px" height="24px" color="#0F172A" />
+            </Button>
+          </div>
+        </div>
+      )}
+    </li>
+  );
+};
+
+export default Todo;

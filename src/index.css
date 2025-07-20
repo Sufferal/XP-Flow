@@ -12,7 +12,11 @@ textarea {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
 
-dialog {
+svg {
+  transition: all 0.2s ease-in-out; 
+}
+
+log {
   transition: display var(--modal-animation-duration) allow-discrete, overlay var(--modal-animation-duration) allow-discrete;
   animation: close var(--modal-animation-duration) forwards;
 }

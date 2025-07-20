@@ -57,6 +57,7 @@ export const ProjectForm = ({ defaultValues = null, onSubmit, onClose }) => {
         required
         value={formData.name}
         onChange={handleChange}
+        autoComplete="off"
       />
       <Textarea
         id="newProjectDesc"

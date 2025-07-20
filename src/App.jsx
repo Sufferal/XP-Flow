@@ -1,62 +1,30 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { LS_CURRENT_PROJECT } from './constants';
 import { NoProjectSelected } from './components/projects/NoProjectSelected';
 import { SidebarProjects } from './components/sidebars/SidebarProjects';
 import { ProjectAddModal } from './components/modals/ProjectAddModal';
 import { Project } from './components/projects/Project';
-import { LS_PROJECTS } from './constants';
-import { v4 as uuidv4 } from 'uuid';
-import { useEffect } from 'react';
+import useProjects from './hooks/useProjects';
 
 function App() {
-  const [projects, setProjects] = useState(
-    JSON.parse(localStorage.getItem(LS_PROJECTS)) ?? [
-      {
-        id: uuidv4(),
-        name: 'Today',
-        desc: `The only moment where karma is truly created. It is cause and effect in motion. Every thought, every word, every action plants a seed. 
-      What you choose today determines what you'll experience tomorrow.
-      How do you wish to feel 1 minute, 1 hour, 1 day from now?`,
-        isPinned: true,
-      },
-    ]
-  );
   const [currentProject, setCurrentProject] = useState(
-    !projects.length || projects[0]
+    JSON.parse(localStorage.getItem(LS_CURRENT_PROJECT)) || null
   );
-  const addProjectRef = useRef(null);
+  const { projects, handleProjectAdd, handleProjectEdit, handleProjectDelete } =
+    useProjects(setCurrentProject);
 
   // Modal handler
+  const addProjectRef = useRef(null);
   const addProjectHandler = () => addProjectRef.current.open();
 
-  // Project operations
-  const handleProjectAdd = newProject => {
-    setProjects(prevProjects => [...prevProjects, newProject]);
-    setCurrentProject(newProject);
-    addProjectRef.current.close();
-  };
-
-  const handleProjectEdit = updProject => {
-    const newProjects = projects.map(p =>
-      p.id === updProject.id ? updProject : p
-    );
-    setProjects(newProjects);
-    setCurrentProject(updProject);
-  };
-
-  const handleProjectDelete = name => {
-    const newProjects = projects.filter(p => p.name != name);
-    setProjects(newProjects);
-    setCurrentProject(null);
-  };
-
   useEffect(() => {
-    localStorage.setItem(LS_PROJECTS, JSON.stringify(projects));
-  }, [projects]);
+    localStorage.setItem(LS_CURRENT_PROJECT, JSON.stringify(currentProject));
+  }, [currentProject]);
 
   return (
     <>
       <ProjectAddModal ref={addProjectRef} onSubmit={handleProjectAdd} />
-      <main className="">
+      <main>
         <SidebarProjects
           items={projects}
           currItem={currentProject}
@@ -72,7 +40,7 @@ function App() {
           {currentProject && (
             <div className="mt-10 ml-10">
               <Project
-                item={currentProject}
+                project={currentProject}
                 onEdit={handleProjectEdit}
                 onDelete={handleProjectDelete}
               />

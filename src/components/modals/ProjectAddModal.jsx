@@ -18,7 +18,7 @@ export const ProjectAddModal = ({ ref, onSubmit }) => {
       }
       content={
         <div className='px-8'>
-          <ProjectForm onSubmit={onSubmit} /> 
+          <ProjectForm onSubmit={onSubmit} onClose={handleClose} /> 
         </div>
       }
     />

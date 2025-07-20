@@ -7,7 +7,7 @@ export const Textarea = ({ label, id, ...props }) => {
       <textarea
         id={id}
         {...props}
-        className="resize-none px-2 py-1 rounded-md border-2 border-slate-300 text-slate-900 transition outline-0 focus:border-slate-900"
+        className="resize-none px-2 py-1 rounded-md border-2 border-slate-300 text-slate-900 transition outline-0 whitespace-pre-wrap focus:border-slate-900"
       />
     </div>
   );

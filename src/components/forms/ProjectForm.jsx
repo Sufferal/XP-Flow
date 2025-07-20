@@ -7,7 +7,7 @@ import { Textarea } from '../inputs/Textarea';
 
 export const ProjectForm = ({ defaultValues = null, onSubmit, onClose }) => {
   const [formData, setFormData] = useState({
-    id: defaultValues?.id || uuidv4(),
+    id: defaultValues?.id || '',
     name: defaultValues?.name || '',
     desc: defaultValues?.desc || '',
     deadline: defaultValues?.deadline || '',
@@ -31,10 +31,13 @@ export const ProjectForm = ({ defaultValues = null, onSubmit, onClose }) => {
     }
   }, [defaultValues]);
 
-  const submitHanlder = e => {
+  const submitHandlder = e => {
     e.preventDefault();
     onClose?.();
-    onSubmit(formData);
+    onSubmit({
+      ...formData,
+      id: uuidv4()
+    });
 
     // Reset form data after submission
     setFormData({
@@ -49,7 +52,7 @@ export const ProjectForm = ({ defaultValues = null, onSubmit, onClose }) => {
   const maxDueDate = getYearDate(5);
 
   return (
-    <form onSubmit={submitHanlder} className="flex flex-col gap-5">
+    <form onSubmit={submitHandlder} className="flex flex-col gap-5">
       <Input
         id="newProjectName"
         name="name"

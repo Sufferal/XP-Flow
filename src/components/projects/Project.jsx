@@ -20,7 +20,7 @@ export const Project = ({ project, onEdit, onDelete }) => {
         {name && <h2 className="font-semibold text-4xl mb-2">{name}</h2>}
         {(desc || deadline) && (
           <div className="gap-3">
-            {desc && <p className="max-w-xl text-left mb-2">{desc}</p>}
+            {desc && <p className="max-w-xl text-left mb-2 whitespace-pre-wrap">{desc}</p>}
             {deadline && (
               <p>
                 <span className="font-semibold">Deadline:</span>{' '}

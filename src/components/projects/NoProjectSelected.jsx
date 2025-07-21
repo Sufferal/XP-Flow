@@ -1,4 +1,4 @@
-import noProjectsImg from '../../assets/no-projects.png';
+import noProjectsImg from '../../assets/img/no-projects.png';
 import { Button } from '../buttons/Button';
 
 export const NoProjectSelected = ({ onClick }) => {

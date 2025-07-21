@@ -5,6 +5,7 @@ import { SidebarProjects } from './components/sidebars/SidebarProjects';
 import { ProjectAddModal } from './components/modals/ProjectAddModal';
 import { Project } from './components/projects/Project';
 import useProjects from './hooks/useProjects';
+import { AudioProvider } from './store/AudioContext';
 
 function App() {
   const [currentProject, setCurrentProject] = useState(
@@ -22,7 +23,7 @@ function App() {
   }, [currentProject]);
 
   return (
-    <>
+    <AudioProvider>
       <ProjectAddModal ref={addProjectRef} onSubmit={handleProjectAdd} />
       <main>
         <SidebarProjects
@@ -48,7 +49,7 @@ function App() {
           )}
         </section>
       </main>
-    </>
+    </AudioProvider>
   );
 }
 

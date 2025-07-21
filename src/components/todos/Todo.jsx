@@ -5,14 +5,21 @@ import { DeleteIcon } from '../icons/DeleteIcon';
 import { VARIANT } from '../../constants/styles';
 import { EditIcon } from '../icons/EditIcon';
 import { SaveIcon } from '../icons/SaveIcon';
+import { SOUNDPACK } from '../../assets/audio';
+import useAudio from '../../hooks/useAudio';
 
-const Todo = ({ todo, onEdit, onDelete }) => {
+const Todo = ({ todo, soundCount, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isCompleted, setIsCompleted] = useState(todo.isCompleted || false);
-  const [newTodo, setNewTodo] = useState('');
+  const [newTodo, setNewTodo] = useState(todo.name || '');
   const editInputRef = useRef(null);
+  const { playSound } = useAudio();
 
   const handleToggleCompleted = () => {
+    // Play sound only when it's not completed
+    if (!isCompleted) {
+      playSound(SOUNDPACK[`soundEffect${soundCount}`]);
+    }
     setIsCompleted(prev => !prev);
   };
 
@@ -32,10 +39,6 @@ const Todo = ({ todo, onEdit, onDelete }) => {
   };
 
   useEffect(() => {
-    console.log('todo.isCompleted', todo.isCompleted);
-    console.log('isCompleted', isCompleted);
-    console.log('difference', isCompleted !== todo.isCompleted);
-    console.log('asdfasdf');
     if (todo.isCompleted !== isCompleted) {
       onEdit({ ...todo, isCompleted });
     }
@@ -70,6 +73,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
             <Input
               ref={editInputRef}
               value={newTodo}
+              onBlur={handleEdit}
               onChange={e => setNewTodo(e.target.value)}
             />
           </form>
@@ -86,7 +90,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
             {todo.name}
           </h2>
           <div className="flex items-center gap-1">
-            <Button variant={VARIANT.icon} onClick={handleEdit}>
+            <Button variant={VARIANT.icon} onClick={handleEdit} className="[&:hover>svg]:fill-red-500">
               <EditIcon width="24px" height="24px" color="#0F172A" />
             </Button>
             <Button

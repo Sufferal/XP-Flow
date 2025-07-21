@@ -6,12 +6,14 @@ import { formatDeadline } from '../../utils/date';
 import TodoForm from '../forms/TodoForm';
 import useTodos from '../../hooks/useTodos';
 import Todo from '../todos/Todo';
+import { SOUNDPACK_LENGTH } from '../../assets/audio';
 
 export const Project = ({ project, onEdit, onDelete }) => {
   const { id, name, desc, deadline, isPinned } = project;
   const { todos, handleTodoAdd, handleTodoEdit, handleTodoDelete } = useTodos();
   const editProjectRef = useRef(null);
   const currentTodos = todos.filter(t => t.category === name);
+  const soundCount = Math.min(currentTodos.filter(t => t.isCompleted).length + 1, SOUNDPACK_LENGTH); // soundpack count starts at 1 
 
   return (
     <>
@@ -20,7 +22,11 @@ export const Project = ({ project, onEdit, onDelete }) => {
         {name && <h2 className="font-semibold text-4xl mb-2">{name}</h2>}
         {(desc || deadline) && (
           <div className="gap-3">
-            {desc && <p className="max-w-xl text-left mb-2 whitespace-pre-wrap">{desc}</p>}
+            {desc && (
+              <p className="max-w-xl text-left mb-2 whitespace-pre-wrap">
+                {desc}
+              </p>
+            )}
             {deadline && (
               <p>
                 <span className="font-semibold">Deadline:</span>{' '}
@@ -43,9 +49,15 @@ export const Project = ({ project, onEdit, onDelete }) => {
         <div className="w-96 mt-5">
           <TodoForm category={name} onSubmit={handleTodoAdd} />
           {currentTodos.length ? (
-            <ul className="mt-5 flex flex-col gap-2">
+            <ul className="mt-5 mb-5 flex flex-col gap-2">
               {currentTodos.map(todo => (
-                <Todo key={todo.id} todo={todo} onEdit={handleTodoEdit} onDelete={() => handleTodoDelete(todo.id)} />
+                <Todo
+                  key={todo.id}
+                  todo={todo}
+                  soundCount={soundCount}
+                  onEdit={handleTodoEdit}
+                  onDelete={() => handleTodoDelete(todo.id)}
+                />
               ))}
             </ul>
           ) : (

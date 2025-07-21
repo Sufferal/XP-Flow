@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LS_PROJECTS } from '../constants';
+import { v4 as uuidv4 } from 'uuid';
 
 function useProjects(currProjFn) {
   const [projects, setProjects] = useState(
@@ -7,9 +8,7 @@ function useProjects(currProjFn) {
       {
         id: uuidv4(),
         name: 'Today',
-        desc: `The only moment where karma is truly created. It is cause and effect in motion. Every thought, every word, every action plants a seed. 
-      What you choose today determines what you'll experience tomorrow.
-      How do you wish to feel 1 minute, 1 hour, 1 day from now?`,
+        desc: 'Every thought, every word, every action plants a seed. How do you wish to feel 1 minute, 1 hour, 1 day from now?',
         isPinned: true,
       },
     ]

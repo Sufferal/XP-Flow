@@ -39,6 +39,10 @@ const Todo = ({ todo, soundCount, onEdit, onDelete }) => {
   };
 
   useEffect(() => {
+    setIsCompleted(todo.isCompleted); 
+  }, [todo.isCompleted]);
+
+  useEffect(() => {
     if (todo.isCompleted !== isCompleted) {
       onEdit({ ...todo, isCompleted });
     }

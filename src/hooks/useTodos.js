@@ -34,6 +34,7 @@ function useTodos() {
 
   return {
     todos,
+    setTodos,
     handleTodoAdd,
     handleTodoEdit,
     handleTodoDelete,

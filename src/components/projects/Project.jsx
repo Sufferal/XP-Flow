@@ -7,17 +7,29 @@ import TodoForm from '../forms/TodoForm';
 import useTodos from '../../hooks/useTodos';
 import Todo from '../todos/Todo';
 import { SOUNDPACK_LENGTH } from '../../assets/audio';
+import { ConfirmationModal } from '../modals/ConfirmationModal';
+import { TodoActions } from '../todos/TodoActions';
 
 export const Project = ({ project, onEdit, onDelete }) => {
   const { id, name, desc, deadline, isPinned } = project;
-  const { todos, handleTodoAdd, handleTodoEdit, handleTodoDelete } = useTodos();
+  const { todos, setTodos, handleTodoAdd, handleTodoEdit, handleTodoDelete } =
+    useTodos();
   const editProjectRef = useRef(null);
+  const confirmationDeleteRef = useRef(null);
   const currentTodos = todos.filter(t => t.category === name);
-  const soundCount = Math.min(currentTodos.filter(t => t.isCompleted).length + 1, SOUNDPACK_LENGTH); // soundpack count starts at 1 
+  const soundCount = Math.min(
+    currentTodos.filter(t => t.isCompleted).length + 1,
+    SOUNDPACK_LENGTH
+  ); // soundpack count starts at 1
 
   return (
     <>
       <ProjectEditModal ref={editProjectRef} item={project} onSubmit={onEdit} />
+      <ConfirmationModal
+        ref={confirmationDeleteRef}
+        title="Are you sure you want to delete this project?"
+        onSubmit={() => onDelete(id)}
+      />
       <div className="flex flex-col gap-2">
         {name && <h2 className="font-semibold text-4xl mb-2">{name}</h2>}
         {(desc || deadline) && (
@@ -43,11 +55,26 @@ export const Project = ({ project, onEdit, onDelete }) => {
             >
               Edit
             </Button>
-            <Button onClick={() => onDelete(id)}>Delete</Button>
+            <Button
+              onClick={() => {
+                confirmationDeleteRef.current.open();
+              }}
+            >
+              Delete
+            </Button>
           </div>
         )}
         <div className="w-96 mt-5">
           <TodoForm category={name} onSubmit={handleTodoAdd} />
+          {currentTodos.length > 0 && (
+            <div className="mt-3">
+              <TodoActions
+                todos={currentTodos}
+                setTodos={setTodos}
+                onDelete={handleTodoDelete}
+              />
+            </div>
+          )}
           {currentTodos.length ? (
             <ul className="mt-5 mb-5 flex flex-col gap-2">
               {currentTodos.map(todo => (

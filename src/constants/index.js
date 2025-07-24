@@ -4,3 +4,6 @@ export const LS_TODOS = 'todos';
 
 export const UNCHECKED = 'Uncheck';
 export const COMPLETED = 'Complete';
+
+export const HOUR_TO_SEC = 3600;
+export const MIN_TO_SEC = 60;

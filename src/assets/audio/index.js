@@ -12,6 +12,7 @@ import monsterKill from './11_monsterkill.mp3';
 import godLike from './12_godlike.mp3';
 import holyShit from './13_holyshit.mp3';
 import rampage from './14_rampage.mp3';
+import missionComplete from './mission_complete.mp3';
 
 export const SOUNDPACK = {
   soundEffect1: firstBlood,
@@ -28,6 +29,7 @@ export const SOUNDPACK = {
   soundEffect12: godLike,
   soundEffect13: rampage,
   soundEffect14: holyShit,
+  timerFinished: missionComplete,
 };
 
 export const SOUNDPACK_LENGTH = Object.keys(SOUNDPACK).length;

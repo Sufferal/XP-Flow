@@ -36,10 +36,11 @@ export const TodoActions = ({ todos, setTodos }) => {
         onSubmit={handleDeleteAll}
       />
       <div className="flex items-center gap-3">
-        <Button onClick={handleToggleCompleteAll}>{completeStatus} all</Button>
+        <Button onClick={handleToggleCompleteAll} fullWidth>{completeStatus} all</Button>
         <Button
           onClick={() => confirmationDeleteRef.current.open()}
           variant={VARIANT.danger}
+          fullWidth
         >
           Delete all
         </Button>

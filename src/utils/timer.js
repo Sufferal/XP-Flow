@@ -108,14 +108,20 @@ export const getNextTickTimer = (timer = {}) => {
   };
 };
 
-export const startTimer = (timer = {}, setTimer) => {
+export const startTimer = (initialSeconds = 0, timer = {}, setTimer) => {
   if (!Object.keys(timer).length) {
     throw new Error('Cannot start an empty timer');
   }
 
-  return setInterval(() => {
-    setTimer(prevTimer => getNextTickTimer(prevTimer));
-  }, 1000);
+  const endTime = Date.now() + initialSeconds * 1000 + 1000;
+
+  const intervalId = setInterval(() => {
+    const now = Date.now();
+    const remainingSeconds = Math.max(0, Math.floor((endTime - now) / 1000));
+    setTimer(secondsToTimer(remainingSeconds));
+  }, 500);
+
+  return intervalId;
 };
 
 export const stopTimer = timerId => clearInterval(timerId);

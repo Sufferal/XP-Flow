@@ -46,7 +46,7 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
       currentTimer.minutes,
       currentTimer.seconds
     );
-    timerIntervalRef.current = startTimer(timer, setTimer);
+    timerIntervalRef.current = startTimer(initialTimerRef.current, timer, setTimer);
   };
 
   const handleSubmit = e => {
@@ -60,7 +60,7 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
       setIsTimerPaused(false);
       setTimer({ hours, minutes, seconds });
       initialTimerRef.current = getTotalSeconds(hours, minutes, seconds);
-      timerIntervalRef.current = startTimer(timer, setTimer);
+      timerIntervalRef.current = startTimer(initialTimerRef.current, timer, setTimer);
     } else {
       setError(errorMsg);
     }
@@ -84,7 +84,7 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
         resumedTimer.minutes,
         resumedTimer.seconds
       );
-      timerIntervalRef.current = startTimer(timer, setTimer);
+      timerIntervalRef.current = startTimer(initialTimerRef.current, timer, setTimer);
     }
 
     setIsTimerPaused(prev => !prev);
@@ -106,6 +106,10 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
       playSound(SOUNDPACK.timerFinished);
     }
   }, [timer]);
+
+  useEffect(() => {
+    return () => stopTimer(timerIntervalRef.current);
+  }, []);
 
   return (
     <div className="inline-flex flex-col w-96">

@@ -71,10 +71,10 @@ This app lets you manage projects and tasks like any standard to-do app, but wit
 
 ## 🚀 Future Enhancements
 
-- [X] Add deadline visual indicators
-- [X] Drag & drop for projects and todos to re-arrange them
-- [X] Common deadline options (1 day, 1 week, 1 month)
-- [X] Other soundpacks sounds (Mission Impossible)
+- [ ] Add deadline visual indicators
+- [ ] Drag & drop for projects and todos to re-arrange them
+- [ ] Common deadline options (1 day, 1 week, 1 month)
+- [ ] Other soundpacks sounds (Mission Impossible)
 
 ## 🛠️ Setup Instructions
 ```

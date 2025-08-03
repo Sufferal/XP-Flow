@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { BLOCKED_TAGS, KEY_DOWN, LS_PROJECTS, LS_TODOS } from '../constants';
+import { LS_PROJECTS, LS_TODOS, NUMBER_SPECIAL_KEYS } from '../constants';
 import { v4 as uuidv4 } from 'uuid';
+import useKeyboardShortcut from './useKeyboardShortcut';
 
 function useProjects(currProjFn) {
   const [projects, setProjects] = useState(
@@ -49,26 +50,9 @@ function useProjects(currProjFn) {
     localStorage.setItem(LS_PROJECTS, JSON.stringify(projects));
   }, [projects]);
 
-  useEffect(() => {
-    const handleKeyDown = e => {
-      const index = Number(e.key);
-
-      // No project selected
-      if (index === 0) currProjFn(null);
-
-      if (
-        !BLOCKED_TAGS.includes(e.target.tagName) &&
-        !isNaN(index) &&
-        index > 0 &&
-        index <= projects.length
-      ) {
-        currProjFn(projects[index - 1]);
-      }
-    };
-
-    window.addEventListener(KEY_DOWN, handleKeyDown);
-    return () => window.removeEventListener(KEY_DOWN, handleKeyDown);
-  }, [projects]);
+  NUMBER_SPECIAL_KEYS.forEach((key, index) => {
+    useKeyboardShortcut(key, () => currProjFn(projects[index] ?? null));
+  });
 
   return {
     projects,

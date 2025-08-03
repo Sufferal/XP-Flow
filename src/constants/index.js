@@ -5,6 +5,19 @@ export const LS_TODOS = 'todos';
 export const UNCHECKED = 'Uncheck';
 export const COMPLETED = 'Complete';
 
+export const NUMBERS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+export const NUMBER_SPECIAL_KEYS = [
+  '!',
+  '@',
+  '#',
+  '$',
+  '%',
+  '^',
+  '&',
+  '*',
+  '(',
+  ')',
+];
 export const KEYS = Object.fromEntries(
   Array.from({ length: 26 }, (_, i) => {
     const char = String.fromCharCode(65 + i); // 'A' to 'Z'

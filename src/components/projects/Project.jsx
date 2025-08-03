@@ -9,7 +9,7 @@ import Todo from '../todos/Todo';
 import { SOUNDPACK_LENGTH } from '../../assets/audio';
 import { ConfirmationModal } from '../modals/ConfirmationModal';
 import { TodoActions } from '../todos/TodoActions';
-import { KEYS, LS_TODOS } from '../../constants';
+import { KEYS, LS_TODOS, NUMBERS } from '../../constants';
 import useKeyboardShortcut from '../../hooks/useKeyboardShortcut';
 
 export const Project = ({ project, onEdit, onDelete }) => {
@@ -28,6 +28,19 @@ export const Project = ({ project, onEdit, onDelete }) => {
     SOUNDPACK_LENGTH
   ); // soundpack count starts at 1
 
+  const toggleTodoCompletion = index => {
+    if (!currentTodos.length) return;
+
+    if (currentTodos[index]) {
+      const newTodos = todos.map(t =>
+        t.id === currentTodos[index].id
+          ? { ...t, isCompleted: !t.isCompleted }
+          : t
+      );
+      setTodos(newTodos)
+    }
+  };
+
   // Update current todos when changing the name of the project
   useEffect(() => {
     setCurrentTodos(
@@ -39,6 +52,9 @@ export const Project = ({ project, onEdit, onDelete }) => {
 
   useKeyboardShortcut(KEYS.E, editProjectHandler);
   useKeyboardShortcut(KEYS.D, deleteProjectHandler);
+  NUMBERS.forEach((key, index) => {
+    useKeyboardShortcut(key, () => toggleTodoCompletion(index));
+  });
 
   return (
     <>

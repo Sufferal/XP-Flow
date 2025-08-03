@@ -1,5 +1,7 @@
 import { useImperativeHandle, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import useKeyboardShortcut from '../../hooks/useKeyboardShortcut';
+import { KEYS } from '../../constants';
 
 export const Modal = ({ ref, header, content, footer, width = '50%', height='50%', closeOnBackdropClick }) => {
   const modalRef = useRef(null);
@@ -35,6 +37,8 @@ export const Modal = ({ ref, header, content, footer, width = '50%', height='50%
       }
     }
   };
+
+  useKeyboardShortcut(KEYS.Q, () => modalRef.current.close()); 
 
   return createPortal(
     <dialog

@@ -5,5 +5,29 @@ export const LS_TODOS = 'todos';
 export const UNCHECKED = 'Uncheck';
 export const COMPLETED = 'Complete';
 
+export const KEYS = Object.fromEntries(
+  Array.from({ length: 26 }, (_, i) => {
+    const char = String.fromCharCode(65 + i); // 'A' to 'Z'
+    return [char, char.toLowerCase()];
+  })
+);
+export const SPECIAL_KEYS = {
+  SEMICOLON: ';',
+};
+export const PRIMARY_SHORTCUTS_TIMER = {
+  start: KEYS.K,
+  pause: KEYS.J,
+  reset: KEYS.L,
+  focus: SPECIAL_KEYS.SEMICOLON,
+};
+export const SECONDARY_SHORTCUTS_TIMER = {
+  start: KEYS.I,
+  pause: KEYS.U,
+  reset: KEYS.O,
+  focus: KEYS.P,
+};
+export const KEY_DOWN = 'keydown';
+export const BLOCKED_TAGS = ['INPUT', 'TEXTAREA', 'SELECT'];
+
 export const HOUR_TO_SEC = 3600;
 export const MIN_TO_SEC = 60;

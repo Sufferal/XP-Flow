@@ -14,8 +14,14 @@ import { SOUNDPACK } from '../../assets/audio';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../buttons/Button';
 import { VARIANT } from '../../constants/styles';
+import { PRIMARY_SHORTCUTS_TIMER } from '../../constants';
+import useKeyboardShortcut from '../../hooks/useKeyboardShortcut';
 
-export const Timer = ({ title, defaultTimer = '10:00' }) => {
+export const Timer = ({
+  title,
+  defaultTimer = '10:00',
+  shortcuts = PRIMARY_SHORTCUTS_TIMER,
+}) => {
   const [defaultSeconds = 0, defaultMinutes = 0, defaultHours = 0] =
     stringToTimer(defaultTimer);
   const [timer, setTimer] = useState({
@@ -36,6 +42,13 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
   );
   const progressRatio = currentTimerSeconds / initialTimerRef.current;
   const hasTimerStarted = !(progressRatio === currentTimerSeconds);
+  const inputRef = useRef(null);
+  const {
+    start: startKey,
+    pause: pauseKey,
+    reset: resetKey,
+    focus: focusKey,
+  } = shortcuts;
 
   const revertTimer = initialTimer => {
     const resumedTimer = secondsToTimer(initialTimerRef.current);
@@ -46,11 +59,17 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
       currentTimer.minutes,
       currentTimer.seconds
     );
-    timerIntervalRef.current = startTimer(initialTimerRef.current, timer, setTimer);
+    timerIntervalRef.current = startTimer(
+      initialTimerRef.current,
+      timer,
+      setTimer
+    );
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = (e = null) => {
+    if (e) {
+      e.preventDefault();
+    }
     stopTimer(timerIntervalRef.current);
     const { isValid, errorMsg } = validateTimer(timerInput);
 
@@ -60,7 +79,11 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
       setIsTimerPaused(false);
       setTimer({ hours, minutes, seconds });
       initialTimerRef.current = getTotalSeconds(hours, minutes, seconds);
-      timerIntervalRef.current = startTimer(initialTimerRef.current, timer, setTimer);
+      timerIntervalRef.current = startTimer(
+        initialTimerRef.current,
+        timer,
+        setTimer
+      );
     } else {
       setError(errorMsg);
     }
@@ -84,7 +107,11 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
         resumedTimer.minutes,
         resumedTimer.seconds
       );
-      timerIntervalRef.current = startTimer(initialTimerRef.current, timer, setTimer);
+      timerIntervalRef.current = startTimer(
+        initialTimerRef.current,
+        timer,
+        setTimer
+      );
     }
 
     setIsTimerPaused(prev => !prev);
@@ -111,11 +138,20 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
     return () => stopTimer(timerIntervalRef.current);
   }, []);
 
+  useKeyboardShortcut(focusKey, () => inputRef.current.focus());
+  useKeyboardShortcut(startKey, handleSubmit);
+  useKeyboardShortcut(
+    pauseKey,
+    hasTimerStarted ? handleTogglePause : undefined
+  );
+  useKeyboardShortcut(resetKey, hasTimerStarted ? handleReset : undefined);
+
   return (
     <div className="inline-flex flex-col w-96">
       <h2 className="font-semibold text-4xl mb-4">{title}</h2>
       <form onSubmit={handleSubmit}>
         <Input
+          ref={inputRef}
           id={uuidv4()}
           value={timerInput}
           onChange={e => setTimerInput(e.target.value)}
@@ -136,8 +172,10 @@ export const Timer = ({ title, defaultTimer = '10:00' }) => {
         ></div>
       </div>
       {!hasTimerStarted && (
-        <div className='mt-3'>
-          <Button onClick={handleSubmit} fullWidth variant={VARIANT.outline}>Start</Button>
+        <div className="mt-3">
+          <Button onClick={handleSubmit} fullWidth variant={VARIANT.outline}>
+            Start
+          </Button>
         </div>
       )}
       {hasTimerStarted && (

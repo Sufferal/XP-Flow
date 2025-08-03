@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Input } from "../inputs/Input";
 import { v4 as uuidv4 } from "uuid";
+import useKeyboardShortcut from "../../hooks/useKeyboardShortcut";
+import { KEYS } from "../../constants";
 
 const TodoForm = ({ category, onSubmit }) => {
+  const inputRef = useRef(null);
   const [userTodo, setUserTodo] = useState('');
+  const focusInput = () => inputRef.current.focus();
 
   const submitHandler = e => {
     e.preventDefault();
@@ -17,9 +21,12 @@ const TodoForm = ({ category, onSubmit }) => {
     setUserTodo('');
   };
 
+  useKeyboardShortcut(KEYS.F, focusInput)
+
   return (
     <form onSubmit={submitHandler}>
       <Input
+        ref={inputRef}
         id="task"
         label="Task"
         value={userTodo}

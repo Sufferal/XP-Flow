@@ -1,11 +1,13 @@
 import { useRef } from 'react';
-import { COMPLETED, UNCHECKED } from '../../constants';
+import { COMPLETED, KEYS, UNCHECKED } from '../../constants';
 import { VARIANT } from '../../constants/styles';
 import { Button } from '../buttons/Button';
 import { ConfirmationModal } from '../modals/ConfirmationModal';
+import useKeyboardShortcut from '../../hooks/useKeyboardShortcut';
 
 export const TodoActions = ({ todos, setTodos }) => {
   const confirmationDeleteRef = useRef(null);
+  const confirmationDeleteHandler = () => confirmationDeleteRef.current.open();
   const areAllTodosCompleted = todos.every(t => t.isCompleted);
   const completeStatus = areAllTodosCompleted ? UNCHECKED : COMPLETED;
 
@@ -28,6 +30,9 @@ export const TodoActions = ({ todos, setTodos }) => {
     confirmationDeleteRef.current.close();
   };
 
+  useKeyboardShortcut(KEYS.C, handleToggleCompleteAll);
+  useKeyboardShortcut(KEYS.X, confirmationDeleteHandler);
+
   return (
     <>
       <ConfirmationModal
@@ -36,9 +41,11 @@ export const TodoActions = ({ todos, setTodos }) => {
         onSubmit={handleDeleteAll}
       />
       <div className="flex items-center gap-3">
-        <Button onClick={handleToggleCompleteAll} fullWidth>{completeStatus} all</Button>
+        <Button onClick={handleToggleCompleteAll} fullWidth>
+          {completeStatus} all
+        </Button>
         <Button
-          onClick={() => confirmationDeleteRef.current.open()}
+          onClick={confirmationDeleteHandler}
           variant={VARIANT.danger}
           fullWidth
         >

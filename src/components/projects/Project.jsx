@@ -9,7 +9,8 @@ import Todo from '../todos/Todo';
 import { SOUNDPACK_LENGTH } from '../../assets/audio';
 import { ConfirmationModal } from '../modals/ConfirmationModal';
 import { TodoActions } from '../todos/TodoActions';
-import { LS_TODOS } from '../../constants';
+import { KEYS, LS_TODOS } from '../../constants';
+import useKeyboardShortcut from '../../hooks/useKeyboardShortcut';
 
 export const Project = ({ project, onEdit, onDelete }) => {
   const { id, name, desc, deadline, isPinned } = project;
@@ -19,7 +20,9 @@ export const Project = ({ project, onEdit, onDelete }) => {
     todos.filter(t => t.category === name)
   );
   const editProjectRef = useRef(null);
+  const editProjectHandler = () => editProjectRef.current.open();
   const confirmationDeleteRef = useRef(null);
+  const deleteProjectHandler = () => confirmationDeleteRef.current.open();
   const soundCount = Math.min(
     currentTodos.filter(t => t.isCompleted).length + 1,
     SOUNDPACK_LENGTH
@@ -32,7 +35,10 @@ export const Project = ({ project, onEdit, onDelete }) => {
         t => t.category === name
       )
     );
-  }, [name]);
+  }, [name, todos]);
+
+  useKeyboardShortcut(KEYS.E, editProjectHandler);
+  useKeyboardShortcut(KEYS.D, deleteProjectHandler);
 
   return (
     <>
@@ -61,19 +67,10 @@ export const Project = ({ project, onEdit, onDelete }) => {
         )}
         {!isPinned && (
           <div className="flex gap-2">
-            <Button
-              variant={VARIANT.outline}
-              onClick={() => editProjectRef.current.open()}
-            >
+            <Button variant={VARIANT.outline} onClick={editProjectHandler}>
               Edit
             </Button>
-            <Button
-              onClick={() => {
-                confirmationDeleteRef.current.open();
-              }}
-            >
-              Delete
-            </Button>
+            <Button onClick={deleteProjectHandler}>Delete</Button>
           </div>
         )}
         <div className="w-96 mt-5">

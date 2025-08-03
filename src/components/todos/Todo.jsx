@@ -5,10 +5,10 @@ import { DeleteIcon } from '../icons/DeleteIcon';
 import { VARIANT } from '../../constants/styles';
 import { EditIcon } from '../icons/EditIcon';
 import { SaveIcon } from '../icons/SaveIcon';
-import { SOUNDPACK } from '../../assets/audio';
 import useAudio from '../../hooks/useAudio';
+import { getRandomSound } from '../../assets/audio';
 
-const Todo = ({ todo, soundCount, onEdit, onDelete }) => {
+const Todo = ({ todo, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isCompleted, setIsCompleted] = useState(todo.isCompleted || false);
   const [newTodo, setNewTodo] = useState(todo.name || '');
@@ -18,7 +18,8 @@ const Todo = ({ todo, soundCount, onEdit, onDelete }) => {
   const handleToggleCompleted = () => {
     // Play sound only when it's not completed
     if (!isCompleted) {
-      playSound(SOUNDPACK[`soundEffect${soundCount}`]);
+      const randomSound = getRandomSound();
+      playSound(randomSound);
     }
     setIsCompleted(prev => !prev);
   };

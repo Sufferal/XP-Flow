@@ -33,3 +33,10 @@ export const SOUNDPACK = {
 };
 
 export const SOUNDPACK_LENGTH = Object.keys(SOUNDPACK).length;
+
+// Helper function to get a random sound from SOUNDPACK (excluding timerFinished)
+export const getRandomSound = () => {
+  const keys = Object.keys(SOUNDPACK).filter(key => key !== 'timerFinished');
+  const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  return SOUNDPACK[randomKey];
+};

@@ -6,11 +6,12 @@ import { formatDeadline } from '../../utils/date';
 import TodoForm from '../forms/TodoForm';
 import useTodos from '../../hooks/useTodos';
 import Todo from '../todos/Todo';
-import { SOUNDPACK_LENGTH } from '../../assets/audio';
+import { getRandomSound, SOUNDPACK_LENGTH } from '../../assets/audio';
 import { ConfirmationModal } from '../modals/ConfirmationModal';
 import { TodoActions } from '../todos/TodoActions';
 import { KEYS, LS_TODOS, NUMBERS } from '../../constants';
 import useKeyboardShortcut from '../../hooks/useKeyboardShortcut';
+import useAudio from '../../hooks/useAudio';
 
 export const Project = ({ project, onEdit, onDelete }) => {
   const { id, name, desc, deadline, isPinned } = project;
@@ -27,17 +28,22 @@ export const Project = ({ project, onEdit, onDelete }) => {
     currentTodos.filter(t => t.isCompleted).length + 1,
     SOUNDPACK_LENGTH
   ); // soundpack count starts at 1
+  const { playSound } = useAudio();
 
   const toggleTodoCompletion = index => {
     if (!currentTodos.length) return;
 
-    if (currentTodos[index]) {
+    const currTodo = currentTodos[index];
+
+    if (currTodo) {
+      if (!currTodo.isCompleted) {
+        const randomSound = getRandomSound();
+        playSound(randomSound);
+      }
       const newTodos = todos.map(t =>
-        t.id === currentTodos[index].id
-          ? { ...t, isCompleted: !t.isCompleted }
-          : t
+        t.id === currTodo.id ? { ...t, isCompleted: !t.isCompleted } : t
       );
-      setTodos(newTodos)
+      setTodos(newTodos);
     }
   };
 
@@ -106,7 +112,6 @@ export const Project = ({ project, onEdit, onDelete }) => {
                 <Todo
                   key={todo.id}
                   todo={todo}
-                  soundCount={soundCount}
                   onEdit={handleTodoEdit}
                   onDelete={() => handleTodoDelete(todo.id)}
                 />

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { VARIANT } from '../../constants/styles';
 import { Button } from '../buttons/Button';
 import { ProjectEditModal } from '../modals/ProjectEditModal';
@@ -9,18 +9,30 @@ import Todo from '../todos/Todo';
 import { SOUNDPACK_LENGTH } from '../../assets/audio';
 import { ConfirmationModal } from '../modals/ConfirmationModal';
 import { TodoActions } from '../todos/TodoActions';
+import { LS_TODOS } from '../../constants';
 
 export const Project = ({ project, onEdit, onDelete }) => {
   const { id, name, desc, deadline, isPinned } = project;
   const { todos, setTodos, handleTodoAdd, handleTodoEdit, handleTodoDelete } =
     useTodos();
+  const [currentTodos, setCurrentTodos] = useState(
+    todos.filter(t => t.category === name)
+  );
   const editProjectRef = useRef(null);
   const confirmationDeleteRef = useRef(null);
-  const currentTodos = todos.filter(t => t.category === name);
   const soundCount = Math.min(
     currentTodos.filter(t => t.isCompleted).length + 1,
     SOUNDPACK_LENGTH
   ); // soundpack count starts at 1
+
+  // Update current todos when changing the name of the project
+  useEffect(() => {
+    setCurrentTodos(
+      JSON.parse(localStorage.getItem(LS_TODOS)).filter(
+        t => t.category === name
+      )
+    );
+  }, [name]);
 
   return (
     <>

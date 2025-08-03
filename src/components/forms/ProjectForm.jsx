@@ -36,7 +36,7 @@ export const ProjectForm = ({ defaultValues = null, onSubmit, onClose }) => {
     onClose?.();
     onSubmit({
       ...formData,
-      id: uuidv4()
+      id: formData.id || uuidv4()
     });
 
     // Reset form data after submission

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LS_PROJECTS } from '../constants';
+import { LS_PROJECTS, LS_TODOS } from '../constants';
 import { v4 as uuidv4 } from 'uuid';
 
 function useProjects(currProjFn) {
@@ -20,11 +20,18 @@ function useProjects(currProjFn) {
   };
 
   const handleProjectEdit = updProject => {
+    const oldProject = projects.find(p => p.id === updProject.id);
     const newProjects = projects.map(p =>
-      p.id === updProject.id ? updProject : p
+      p.id === oldProject.id ? updProject : p
     );
+    const todos = JSON.parse(localStorage.getItem(LS_TODOS));
+    const newTodos = todos.map(t =>
+      t.category === oldProject.name ? { ...t, category: updProject.name } : t
+    );
+
     setProjects(newProjects);
     currProjFn(updProject);
+    localStorage.setItem(LS_TODOS, JSON.stringify(newTodos));
   };
 
   const handleProjectDelete = id => {

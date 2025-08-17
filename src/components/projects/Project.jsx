@@ -6,7 +6,7 @@ import { formatDeadline } from '../../utils/date';
 import TodoForm from '../forms/TodoForm';
 import useTodos from '../../hooks/useTodos';
 import Todo from '../todos/Todo';
-import { getRandomSound, SOUNDPACK_LENGTH } from '../../assets/audio';
+import { getSoundByKey, SOUNDPACK_LENGTH } from '../../assets/audio';
 import { ConfirmationModal } from '../modals/ConfirmationModal';
 import { TodoActions } from '../todos/TodoActions';
 import { KEYS, LS_TODOS, NUMBERS } from '../../constants';
@@ -37,7 +37,7 @@ export const Project = ({ project, onEdit, onDelete }) => {
 
     if (currTodo) {
       if (!currTodo.isCompleted) {
-        const randomSound = getRandomSound();
+        const randomSound = getSoundByKey('sfxDeathblow');
         playSound(randomSound);
       }
       const newTodos = todos.map(t =>

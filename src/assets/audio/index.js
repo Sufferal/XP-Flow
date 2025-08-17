@@ -13,6 +13,8 @@ import godLike from './12_godlike.mp3';
 import holyShit from './13_holyshit.mp3';
 import rampage from './14_rampage.mp3';
 import missionComplete from './mission_complete.mp3';
+import sekiroDeathblow from './sekiro_deathblow.mp3';
+import sekiroChill from './sekiro_chill.mp3';
 
 export const SOUNDPACK = {
   soundEffect1: firstBlood,
@@ -30,6 +32,8 @@ export const SOUNDPACK = {
   soundEffect13: rampage,
   soundEffect14: holyShit,
   timerFinished: missionComplete,
+  sfxDeathblow: sekiroDeathblow,
+  sfxChill: sekiroChill,
 };
 
 export const SOUNDPACK_LENGTH = Object.keys(SOUNDPACK).length;
@@ -39,4 +43,8 @@ export const getRandomSound = () => {
   const keys = Object.keys(SOUNDPACK).filter(key => key !== 'timerFinished');
   const randomKey = keys[Math.floor(Math.random() * keys.length)];
   return SOUNDPACK[randomKey];
+};
+
+export const getSoundByKey = key => {
+  return SOUNDPACK[key] || SOUNDPACK.sfxDeathblow;
 };

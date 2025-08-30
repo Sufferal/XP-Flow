@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { KEYS, LS_CURRENT_PROJECT, PRIMARY_SHORTCUTS_TIMER, SECONDARY_SHORTCUTS_TIMER } from './constants';
+import {
+  KEYS,
+  LS_CURRENT_PROJECT,
+  PRIMARY_SHORTCUTS_TIMER,
+  SECONDARY_SHORTCUTS_TIMER,
+} from './constants';
 import { NoProjectSelected } from './components/projects/NoProjectSelected';
 import { SidebarProjects } from './components/sidebars/SidebarProjects';
 import { ProjectAddModal } from './components/modals/ProjectAddModal';
@@ -13,14 +18,14 @@ function App() {
   const [currentProject, setCurrentProject] = useState(
     JSON.parse(localStorage.getItem(LS_CURRENT_PROJECT)) || null
   );
-  const { projects, handleProjectAdd, handleProjectEdit, handleProjectDelete } =
+  const { projects, setProjects, handleProjectAdd, handleProjectEdit, handleProjectDelete } =
     useProjects(setCurrentProject);
 
   // Modal handler
   const addProjectRef = useRef(null);
   const addProjectHandler = () => addProjectRef.current.open();
 
-  useKeyboardShortcut(KEYS.N, addProjectHandler); 
+  useKeyboardShortcut(KEYS.N, addProjectHandler);
 
   useEffect(() => {
     localStorage.setItem(LS_CURRENT_PROJECT, JSON.stringify(currentProject));
@@ -31,7 +36,8 @@ function App() {
       <ProjectAddModal ref={addProjectRef} onSubmit={handleProjectAdd} />
       <main>
         <SidebarProjects
-          items={projects}
+          projects={projects}
+          setProjects={setProjects}
           currItem={currentProject}
           setCurrItem={setCurrentProject}
           onAdd={addProjectHandler}
@@ -52,8 +58,16 @@ function App() {
             </div>
           )}
           <div className="flex flex-col mt-10 gap-10">
-            <Timer title="Work" defaultTimer="50:00" shortcuts={PRIMARY_SHORTCUTS_TIMER} />
-            <Timer title="Break" defaultTimer="10:00" shortcuts={SECONDARY_SHORTCUTS_TIMER} />
+            <Timer
+              title="Work"
+              defaultTimer="50:00"
+              shortcuts={PRIMARY_SHORTCUTS_TIMER}
+            />
+            <Timer
+              title="Break"
+              defaultTimer="10:00"
+              shortcuts={SECONDARY_SHORTCUTS_TIMER}
+            />
           </div>
         </section>
       </main>

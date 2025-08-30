@@ -56,6 +56,7 @@ function useProjects(currProjFn) {
 
   return {
     projects,
+    setProjects,
     handleProjectAdd,
     handleProjectEdit,
     handleProjectDelete,

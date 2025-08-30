@@ -14,16 +14,21 @@ import useKeyboardShortcut from '../../hooks/useKeyboardShortcut';
 import useAudio from '../../hooks/useAudio';
 
 export const Project = ({ project, onEdit, onDelete }) => {
+  // State & Custom hooks
   const { id, name, desc, deadline, isPinned } = project;
   const { todos, setTodos, handleTodoAdd, handleTodoEdit, handleTodoDelete } =
     useTodos();
   const [currentTodos, setCurrentTodos] = useState(
     todos.filter(t => t.category === name)
   );
+
+  // Refs
   const editProjectRef = useRef(null);
   const editProjectHandler = () => editProjectRef.current.open();
   const confirmationDeleteRef = useRef(null);
   const deleteProjectHandler = () => confirmationDeleteRef.current.open();
+
+  // Sound
   const soundCount = Math.min(
     currentTodos.filter(t => t.isCompleted).length + 1,
     SOUNDPACK_LENGTH
@@ -56,6 +61,7 @@ export const Project = ({ project, onEdit, onDelete }) => {
     );
   }, [name, todos]);
 
+  // Keyboard shortcuts
   useKeyboardShortcut(KEYS.E, editProjectHandler);
   useKeyboardShortcut(KEYS.D, deleteProjectHandler);
   NUMBERS.forEach((key, index) => {

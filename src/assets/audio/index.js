@@ -15,6 +15,7 @@ import rampage from './14_rampage.mp3';
 import missionComplete from './mission_complete.mp3';
 import sekiroDeathblow from './sekiro_deathblow.mp3';
 import sekiroChill from './sekiro_chill.mp3';
+import alarm from './alarm.mp3';
 
 export const SOUNDPACK = {
   soundEffect1: firstBlood,
@@ -34,6 +35,7 @@ export const SOUNDPACK = {
   timerFinished: missionComplete,
   sfxDeathblow: sekiroDeathblow,
   sfxChill: sekiroChill,
+  sfxAlarm: alarm,
 };
 
 export const SOUNDPACK_LENGTH = Object.keys(SOUNDPACK).length;

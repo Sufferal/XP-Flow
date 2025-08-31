@@ -130,7 +130,7 @@ export const Timer = ({
   useEffect(() => {
     if (!timer.hours && !timer.minutes && !timer.seconds) {
       stopTimer(timerIntervalRef.current);
-      playSound(SOUNDPACK.sfxChill);
+      playSound(SOUNDPACK.sfxAlarm);
     }
   }, [timer]);
 

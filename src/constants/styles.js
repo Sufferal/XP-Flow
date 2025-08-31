@@ -4,3 +4,5 @@ export const VARIANT = {
   danger: 'danger',
   icon: 'icon',
 };
+
+export const MODAL_PROJECT_HEIGHT = '65%';

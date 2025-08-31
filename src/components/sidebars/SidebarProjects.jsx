@@ -67,7 +67,7 @@ export const SidebarProjects = ({
             onDrop={() => handleDrop(index)}
           >
             <button
-              className={`text-slate-50 w-full text-left rounded p-3 ease-in duration-200 ${
+              className={`truncate text-slate-50 w-full text-left rounded p-3 ease-in duration-200 ${
                 project.name === currItem?.name
                   ? 'bg-slate-50 text-slate-900 font-bold'
                   : ''

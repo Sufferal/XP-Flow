@@ -13,13 +13,18 @@ import useProjects from './hooks/useProjects';
 import { AudioProvider } from './store/AudioContext';
 import { Timer } from './components/timers/Timer';
 import useKeyboardShortcut from './hooks/useKeyboardShortcut';
+import { getLocalStorageItem, setLocalStorageItem } from './utils/localStorage';
 
 function App() {
-  const [currentProject, setCurrentProject] = useState(
-    JSON.parse(localStorage.getItem(LS_CURRENT_PROJECT)) || null
-  );
-  const { projects, setProjects, handleProjectAdd, handleProjectEdit, handleProjectDelete } =
-    useProjects(setCurrentProject);
+  const [currentProject, setCurrentProject] =
+    useState(getLocalStorageItem(LS_CURRENT_PROJECT)) || null;
+  const {
+    projects,
+    setProjects,
+    handleProjectAdd,
+    handleProjectEdit,
+    handleProjectDelete,
+  } = useProjects(setCurrentProject);
 
   // Modal handler
   const addProjectRef = useRef(null);
@@ -28,7 +33,7 @@ function App() {
   useKeyboardShortcut(KEYS.N, addProjectHandler);
 
   useEffect(() => {
-    localStorage.setItem(LS_CURRENT_PROJECT, JSON.stringify(currentProject));
+    setLocalStorageItem(LS_CURRENT_PROJECT, currentProject)
   }, [currentProject]);
 
   return (
@@ -49,7 +54,7 @@ function App() {
         >
           {!currentProject && <NoProjectSelected onClick={addProjectHandler} />}
           {currentProject && (
-            <div className="mt-10 ml-10 flex gap-10 w-96">
+            <div className="mt-10 ml-10 flex gap-10 w-sm">
               <Project
                 project={currentProject}
                 onEdit={handleProjectEdit}
@@ -65,7 +70,7 @@ function App() {
             />
             <Timer
               title="Break"
-              defaultTimer="10:00"
+              defaultTimer="20:00"
               shortcuts={SECONDARY_SHORTCUTS_TIMER}
             />
           </div>

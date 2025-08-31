@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
 import { LS_TODOS } from '../constants';
-import { v4 as uuidv4 } from 'uuid';
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from '../utils/localStorage';
+import { MOCK_TODOS } from '../mocks/todo';
 
 function useTodos() {
   const [todos, setTodos] = useState(
-    JSON.parse(localStorage.getItem(LS_TODOS)) ?? [
-      {
-        id: uuidv4(),
-        name: 'Meditate',
-        category: 'Today',
-        isCompleted: false,
-      },
-    ]
+    getLocalStorageItem(LS_TODOS) ?? MOCK_TODOS
   );
-
   const handleTodoAdd = newTodo => {
     setTodos(prevTodos => [...prevTodos, newTodo]);
   };
@@ -29,7 +25,7 @@ function useTodos() {
   };
 
   useEffect(() => {
-    localStorage.setItem(LS_TODOS, JSON.stringify(todos));
+    setLocalStorageItem(LS_TODOS, todos);
   }, [todos]);
 
   return {

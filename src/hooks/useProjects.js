@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import { LS_PROJECTS, LS_TODOS, NUMBER_SPECIAL_KEYS } from '../constants';
-import { v4 as uuidv4 } from 'uuid';
 import useKeyboardShortcut from './useKeyboardShortcut';
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from '../utils/localStorage';
+import { MOCK_PROJECTS } from '../mocks/project';
 
 function useProjects(currProjFn) {
   const [projects, setProjects] = useState(
-    JSON.parse(localStorage.getItem(LS_PROJECTS)) ?? [
-      {
-        id: uuidv4(),
-        name: 'Today',
-        desc: 'Every thought, every word, every action plants a seed. How do you wish to feel 1 minute, 1 hour, 1 day from now?',
-        isPinned: true,
-      },
-    ]
+    getLocalStorageItem(LS_PROJECTS) ?? MOCK_PROJECTS
   );
 
   const handleProjectAdd = newProject => {
@@ -25,29 +22,29 @@ function useProjects(currProjFn) {
     const newProjects = projects.map(p =>
       p.id === oldProject.id ? updProject : p
     );
-    const todos = JSON.parse(localStorage.getItem(LS_TODOS));
+    const todos = getLocalStorageItem(LS_TODOS);
     const newTodos = todos.map(t =>
       t.category === oldProject.name ? { ...t, category: updProject.name } : t
     );
 
     setProjects(newProjects);
     currProjFn(updProject);
-    localStorage.setItem(LS_TODOS, JSON.stringify(newTodos));
+    setLocalStorageItem(LS_TODOS, newTodos);
   };
 
   const handleProjectDelete = id => {
     const deletedProject = projects.find(p => p.id === id);
     const newProjects = projects.filter(p => p.id !== id);
-    const todos = JSON.parse(localStorage.getItem(LS_TODOS));
+    const todos = getLocalStorageItem(LS_TODOS);
     const newTodos = todos.filter(t => t.category !== deletedProject.name);
 
     setProjects(newProjects);
     currProjFn(null);
-    localStorage.setItem(LS_TODOS, JSON.stringify(newTodos));
+    setLocalStorageItem(LS_TODOS, newTodos);
   };
 
   useEffect(() => {
-    localStorage.setItem(LS_PROJECTS, JSON.stringify(projects));
+    setLocalStorageItem(LS_PROJECTS, projects);
   }, [projects]);
 
   NUMBER_SPECIAL_KEYS.forEach((key, index) => {

@@ -24,8 +24,11 @@ const Todo = ({ todo, onEdit, onDelete }) => {
     setIsCompleted(prev => !prev);
   };
 
-  const handleEdit = () => {
-    setIsEditing(prevEdit => !prevEdit);
+  const handleEdit = e => {
+    if (e.relatedTarget?.type === 'submit') {
+      return; // don't exit edit mode if Save button was clicked
+    }
+    setIsEditing(true);
   };
 
   const handleSubmit = e => {
@@ -36,11 +39,11 @@ const Todo = ({ todo, onEdit, onDelete }) => {
         name: newTodo,
       });
     }
-    setIsEditing(prevEdit => !prevEdit);
+    setIsEditing(false);
   };
 
   useEffect(() => {
-    setIsCompleted(todo.isCompleted); 
+    setIsCompleted(todo.isCompleted);
   }, [todo.isCompleted]);
 
   useEffect(() => {
@@ -55,6 +58,66 @@ const Todo = ({ todo, onEdit, onDelete }) => {
     }
   }, [isEditing]);
 
+  let todoContent = (
+    <div className="w-full flex items-center justify-between">
+      <h2
+        className="font-semibold cursor-pointer max-w-[17rem] break-words"
+        onClick={handleToggleCompleted}
+      >
+        {todo.name}
+      </h2>
+      <div className="flex items-center gap-1">
+        <Button
+          variant={VARIANT.icon}
+          onClick={handleEdit}
+          className="[&:hover>svg]:fill-red-500"
+        >
+          <EditIcon width="24px" height="24px" color="#0F172A" />
+        </Button>
+        <Button
+          variant={VARIANT.icon}
+          onClick={onDelete}
+          className="[&:hover>svg]:fill-red-500"
+        >
+          <DeleteIcon width="24px" height="24px" color="#0F172A" />
+        </Button>
+      </div>
+    </div>
+  );
+
+  if (isCompleted) {
+    todoContent = (
+      <h2
+        className="max-w-[22rem] break-words italic font-semibold bg-slate-900 text-white w-full rounded px-2 py-1 cursor-pointer"
+        onClick={handleToggleCompleted}
+      >
+        {todo.name}
+      </h2>
+    );
+  }
+
+  if (isEditing) {
+    todoContent = (
+      <div className="w-full">
+        <form
+          className="flex-grow flex justify-between gap-2"
+          onSubmit={handleSubmit}
+        >
+          <Input
+            id={todo.name}
+            ref={editInputRef}
+            value={newTodo}
+            onBlur={handleEdit}
+            onChange={e => setNewTodo(e.target.value)}
+          />
+          <Button variant={VARIANT.icon} type="submit">
+            <SaveIcon width="16px" height="16px" color="#0F172A" />
+          </Button>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <li className="flex items-center gap-2">
       <div className="mr-3">
@@ -65,49 +128,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
           onChange={handleToggleCompleted}
         />
       </div>
-      {isCompleted ? (
-        <p
-          className="italic font-semibold bg-slate-900 text-white w-full rounded px-2 py-1 cursor-pointer"
-          onClick={handleToggleCompleted}
-        >
-          {todo.name}
-        </p>
-      ) : isEditing ? (
-        <div className="w-full flex justify-between gap-2">
-          <form className="flex-grow" onSubmit={handleSubmit}>
-            <Input
-              ref={editInputRef}
-              value={newTodo}
-              onBlur={handleEdit}
-              onChange={e => setNewTodo(e.target.value)}
-            />
-          </form>
-          <Button variant={VARIANT.icon} onClick={handleSubmit}>
-            <SaveIcon width="16px" height="16px" color="#0F172A" />
-          </Button>
-        </div>
-      ) : (
-        <div className="w-full flex items-center justify-between">
-          <h2
-            className="font-semibold cursor-pointer"
-            onClick={handleToggleCompleted}
-          >
-            {todo.name}
-          </h2>
-          <div className="flex items-center gap-1">
-            <Button variant={VARIANT.icon} onClick={handleEdit} className="[&:hover>svg]:fill-red-500">
-              <EditIcon width="24px" height="24px" color="#0F172A" />
-            </Button>
-            <Button
-              variant={VARIANT.icon}
-              onClick={onDelete}
-              className="[&:hover>svg]:fill-red-500"
-            >
-              <DeleteIcon width="24px" height="24px" color="#0F172A" />
-            </Button>
-          </div>
-        </div>
-      )}
+      {todoContent}
     </li>
   );
 };

@@ -14,7 +14,7 @@ export const ConfirmationModal = ({ ref, title, onSubmit, onClose }) => {
       width="30%"
       height="25%"
       header={
-        <div className="text-slate-900 font-semibold text-xl flex justify-between px-8 mt-6 mb-3 gap-10">
+        <div className="text-slate-900 font-semibold text-xl flex justify-between px-8 mt-8 mb-3 gap-10">
           <h2 className="text-2xl">{title}</h2>
         </div>
       }

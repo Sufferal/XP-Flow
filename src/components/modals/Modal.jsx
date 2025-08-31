@@ -44,10 +44,10 @@ export const Modal = ({ ref, header, content, footer, width = '50%', height='50%
     <dialog
       ref={modalRef}
       onClick={closeOnBackdropClick ? handleBackdropClick : undefined}
-      className="backdrop:bg-slate-900/70 absolute z-50text-green-900 rounded-xl overflow-hidden"
+      className="backdrop:bg-slate-900/70 absolute z-50 text-green-900 rounded-xl overflow-hidden"
       style={{ width, height }}
     >
-      <div ref={contentRef} className="h-full">
+      <div ref={contentRef} className="h-full flex flex-col">
         {header}
         {content}
         {footer}

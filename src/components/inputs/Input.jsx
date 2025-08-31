@@ -23,7 +23,7 @@ export const Input = ({ label, id, error, className, ref, ...props }) => {
   }
 
   return (
-    <div className={`flex flex-col`}>
+    <div className={`flex flex-col flex-grow`}>
       {label && (
         <label htmlFor={id} className={`${error ? 'mb-0' : 'mb-2'} font-semibold text-slate-600`}>
           {label}

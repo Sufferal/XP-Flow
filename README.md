@@ -2,18 +2,27 @@
 
 A gamified project and task management tool designed for productivity and motivation.
 
-This app lets you manage projects and tasks like any standard to-do app, but with a twist: **audio feedback from games like Dota 2 and GTA: San Andreas keeps you engaged and entertained.**
+This app lets you manage projects and tasks like any standard to-do app, but with a twist: **audio feedback from games like Dota 2, GTA: San Andreas and Sekiro keeps you engaged and entertained.**
 
-Website link: [https://sufferal.github.io/XP-Flow/](https://sufferal.github.io/XP-Flow/)
+Website demo: [https://sufferal.github.io/XP-Flow/](https://sufferal.github.io/XP-Flow/)
+
+## How to use it?
+
+- Using the keyboard shortcuts (find them somewhere in the codebase :P)
+- Using the mouse 🤢 (click the demo below)
+
+[![Demo Video](https://img.youtube.com/vi/ouosPVR8f_I/0.jpg)](https://www.youtube.com/watch?v=ouosPVR8f_I)
 
 ## 🎮 Unique Features
 
 ### ✅ Gamified Task Completion
+
 - Completing a task triggers **iconic Dota 2 kill streak sounds** based on how many tasks you've checked off:
-  - *First Blood*, *Double Kill*, *Triple Kill*, etc.
+  - _First Blood_, _Double Kill_, _Triple Kill_, etc.
 - Sounds rotate based on the completion streak, making task-checking genuinely satisfying.
 
 ### ⏲️ Motivational Timer System
+
 - Comes with two preset timers:
   - **Work** timer (default: 50 minutes)
   - **Break** timer (default: 10 minutes)
@@ -23,6 +32,7 @@ Website link: [https://sufferal.github.io/XP-Flow/](https://sufferal.github.io/X
 ## 🗂️ Features Overview
 
 ### 📁 Project Management
+
 - Create, edit, and delete projects.
 - Each project has:
   - `Name`
@@ -32,11 +42,13 @@ Website link: [https://sufferal.github.io/XP-Flow/](https://sufferal.github.io/X
 - Project state is saved in `localStorage` and restored on reload.
 
 ### ✅ Task Management
+
 - Add, edit, and delete individual tasks within a project.
 - Tasks can be marked as complete/incomplete with one click.
 - Inline editing with auto-focus behavior.
 
 ### ⏱️ Timer
+
 - Highly customizable.
 - Accepts `hh:mm:ss` format as input.
 - Input validation prevents malformed timers.
@@ -61,27 +73,12 @@ Website link: [https://sufferal.github.io/XP-Flow/](https://sufferal.github.io/X
 - **LocalStorage**: To persist selected project
 - **Audio API**: For dynamic sound effects
 
-## 📸 Preview
-### Sidebar
-![Sidebar](./docs/img/sidebar.png)
-
-### Project
-![Project](./docs/img/project.png)
-
-### Timer
-![Timer](./docs/img/timer.png)
-
-## 🚀 Future Enhancements
-
-- [ ] Add deadline visual indicators
-- [ ] Drag & drop for projects and todos to re-arrange them
-- [ ] Common deadline options (1 day, 1 week, 1 month)
-- [ ] Other soundpacks sounds (Mission Impossible)
-
 ## 🛠️ Setup Instructions
+
 ```
 npm install
 ```
+
 ```
 npm run dev
 ```
@@ -94,6 +91,7 @@ Got sound suggestions or features you’d like to see? Open an issue or start a 
 
 - Dota 2 sound effects — © Valve
 - GTA: San Andreas "Mission Passed" sound — © Rockstar Games
+- Sekiro sound effects - © FromSoftware
 
 ## License
 

@@ -21,6 +21,7 @@ export const Timer = ({
   title,
   defaultTimer = '10:00',
   shortcuts = PRIMARY_SHORTCUTS_TIMER,
+  completeSound = SOUNDPACK.sfxMissionComplete 
 }) => {
   const [defaultSeconds = 0, defaultMinutes = 0, defaultHours = 0] =
     stringToTimer(defaultTimer);
@@ -130,7 +131,7 @@ export const Timer = ({
   useEffect(() => {
     if (!timer.hours && !timer.minutes && !timer.seconds) {
       stopTimer(timerIntervalRef.current);
-      playSound(SOUNDPACK.sfxAlarm);
+      playSound(completeSound);
     }
   }, [timer]);
 

@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import {
   KEYS,
   LS_CURRENT_PROJECT,
-  PRIMARY_SHORTCUTS_TIMER,
-  SECONDARY_SHORTCUTS_TIMER,
 } from './constants';
 import { NoProjectSelected } from './components/projects/NoProjectSelected';
 import { SidebarProjects } from './components/sidebars/SidebarProjects';
@@ -11,9 +9,9 @@ import { ProjectAddModal } from './components/modals/ProjectAddModal';
 import { Project } from './components/projects/Project';
 import useProjects from './hooks/useProjects';
 import { AudioProvider } from './store/AudioContext';
-import { Timer } from './components/timers/Timer';
 import useKeyboardShortcut from './hooks/useKeyboardShortcut';
 import { getLocalStorageItem, setLocalStorageItem } from './utils/localStorage';
+import { TimerList } from './components/timers/TimerList';
 
 function App() {
   const [currentProject, setCurrentProject] =
@@ -33,7 +31,7 @@ function App() {
   useKeyboardShortcut(KEYS.N, addProjectHandler);
 
   useEffect(() => {
-    setLocalStorageItem(LS_CURRENT_PROJECT, currentProject)
+    setLocalStorageItem(LS_CURRENT_PROJECT, currentProject);
   }, [currentProject]);
 
   return (
@@ -63,16 +61,7 @@ function App() {
             </div>
           )}
           <div className="flex flex-col mt-10 gap-10">
-            <Timer
-              title="Work"
-              defaultTimer="50:00"
-              shortcuts={PRIMARY_SHORTCUTS_TIMER}
-            />
-            <Timer
-              title="Break"
-              defaultTimer="20:00"
-              shortcuts={SECONDARY_SHORTCUTS_TIMER}
-            />
+            <TimerList />
           </div>
         </section>
       </main>

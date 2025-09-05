@@ -16,6 +16,8 @@ import missionComplete from './mission_complete.mp3';
 import sekiroDeathblow from './sekiro_deathblow.mp3';
 import sekiroChill from './sekiro_chill.mp3';
 import alarm from './alarm.mp3';
+import patapim from './brrr-brrr-patapim.mp3';
+import romanianSensors from './romanian_sensors.mp3';
 
 export const SOUNDPACK = {
   soundEffect1: firstBlood,
@@ -32,10 +34,12 @@ export const SOUNDPACK = {
   soundEffect12: godLike,
   soundEffect13: rampage,
   soundEffect14: holyShit,
-  timerFinished: missionComplete,
+  sfxMissionComplete: missionComplete,
   sfxDeathblow: sekiroDeathblow,
   sfxChill: sekiroChill,
   sfxAlarm: alarm,
+  sfxPatapim: patapim,
+  sfxRomanianSensors: romanianSensors,
 };
 
 export const SOUNDPACK_LENGTH = Object.keys(SOUNDPACK).length;

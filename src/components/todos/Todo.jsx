@@ -6,7 +6,7 @@ import { VARIANT } from '../../constants/styles';
 import { EditIcon } from '../icons/EditIcon';
 import { SaveIcon } from '../icons/SaveIcon';
 import useAudio from '../../hooks/useAudio';
-import { getSoundByKey } from '../../assets/audio';
+import { SOUNDPACK } from '../../assets/audio';
 
 const Todo = ({ todo, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -18,8 +18,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
   const handleToggleCompleted = () => {
     // Play sound only when it's not completed
     if (!isCompleted) {
-      const randomSound = getSoundByKey('sfxDeathblow');
-      playSound(randomSound);
+      playSound(SOUNDPACK.sfxDing);
     }
     setIsCompleted(prev => !prev);
   };

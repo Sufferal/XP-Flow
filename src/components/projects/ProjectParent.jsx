@@ -28,9 +28,9 @@ export const ProjectParent = ({ currProjName, parentName }) => {
 
   if (parentTodos.length) {
     todosContent = (
-      <ol className='list-decimal mx-10 mt-5'>
+      <ol className='list-decimal mx-10 mt-5 flex flex-col gap-1'>
         {parentTodos.map(t => (
-          <li key={t.id}>{t.name}</li>
+          <li key={t.id} className={t.isCompleted ? 'decoration-4 line-through decoration-slate-900' : 'b'}>{t.name}</li>
         ))}
       </ol>
     );

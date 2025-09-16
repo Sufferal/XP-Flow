@@ -19,6 +19,8 @@ import alarm from './alarm.mp3';
 import patapim from './brrr-brrr-patapim.mp3';
 import romanianSensors from './romanian_sensors.mp3';
 import ding from './ding.mp3';
+import hotlineBling from './hotline_bling.mp3';
+import churchBell from './church_bell.mp3';
 
 export const SOUNDPACK = {
   soundEffect1: firstBlood,
@@ -42,6 +44,8 @@ export const SOUNDPACK = {
   sfxPatapim: patapim,
   sfxRomanianSensors: romanianSensors,
   sfxDing: ding,
+  sfxHotlineBling: hotlineBling,
+  sfxChurchBell: churchBell,
 };
 
 export const SOUNDPACK_LENGTH = Object.keys(SOUNDPACK).length;

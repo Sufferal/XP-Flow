@@ -9,13 +9,13 @@ export const TimerList = () => {
         title="Work"
         defaultTimer="50:00"
         shortcuts={PRIMARY_SHORTCUTS_TIMER}
-        completeSound={SOUNDPACK.sfxRomanianSensors}
+        completeSound={SOUNDPACK.sfxChurchBell}
       />
       <Timer
         title="Break"
         defaultTimer="20:00"
         shortcuts={SECONDARY_SHORTCUTS_TIMER}
-        completeSound={SOUNDPACK.sfxPatapim}
+        completeSound={SOUNDPACK.sfxHotlineBling}
       />
     </>
   );

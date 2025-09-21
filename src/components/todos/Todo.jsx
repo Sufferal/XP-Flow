@@ -46,9 +46,12 @@ const Todo = ({ todo, onEdit, onDelete }) => {
   }, [todo.isCompleted]);
 
   useEffect(() => {
-    if (todo.isCompleted !== isCompleted) {
-      onEdit({ ...todo, isCompleted });
-    }
+    let timerId = setTimeout(() => {
+      if (todo.isCompleted !== isCompleted) {
+        onEdit({ ...todo, isCompleted });
+      }
+    }, 2000);
+    return () => clearTimeout(timerId);
   }, [isCompleted]);
 
   useEffect(() => {

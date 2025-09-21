@@ -25,7 +25,8 @@ function useTodos() {
   };
 
   useEffect(() => {
-    setLocalStorageItem(LS_TODOS, todos);
+    const unfinishedTodos = todos.filter(t => !t.isCompleted);
+    setLocalStorageItem(LS_TODOS, unfinishedTodos);
   }, [todos]);
 
   return {

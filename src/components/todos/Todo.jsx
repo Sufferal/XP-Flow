@@ -68,7 +68,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
       exit={{ opacity: 0, x: -30 }}
     >
       <h2
-        className="font-semibold cursor-pointer max-w-[17rem] break-words"
+        className="font-semibold cursor-pointer max-w-68 break-words"
         onClick={handleToggleCompleted}
       >
         {todo.name}
@@ -95,7 +95,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
   if (isCompleted) {
     todoContent = (
       <motion.h2
-        className="max-w-[22rem] break-words italic font-semibold bg-slate-900 text-white w-full rounded px-2 py-1 cursor-pointer"
+        className="max-w-88 break-words italic font-semibold bg-slate-900 text-white w-full rounded-sm px-2 py-1 cursor-pointer"
         onClick={handleToggleCompleted}
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -110,7 +110,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
     todoContent = (
       <div className="w-full">
         <form
-          className="flex-grow flex justify-between gap-2"
+          className="grow flex justify-between gap-2"
           onSubmit={handleSubmit}
         >
           <Input

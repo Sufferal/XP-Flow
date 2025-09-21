@@ -52,7 +52,7 @@ function App() {
         >
           {!currentProject && <NoProjectSelected onClick={addProjectHandler} />}
           {currentProject && (
-            <div className="mt-10 ml-10 flex gap-10 w-sm">
+            <div className="mt-10 ml-10 flex gap-10">
               <Project
                 project={currentProject}
                 onEdit={handleProjectEdit}

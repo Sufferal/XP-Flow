@@ -43,7 +43,7 @@ export const SidebarProjects = ({
   return (
     <Sidebar title="My Projects">
       <button
-        className="bg-slate-50 hover:bg-slate-300 ease-in duration-200 font-semibold rounded mb-16 py-1 px-3 active:translate-y-0.5"
+        className="bg-slate-50 hover:bg-slate-300 ease-in duration-200 font-semibold rounded-sm mb-16 py-1 px-3 active:translate-y-0.5"
         onClick={onAdd}
       >
         + Add Project
@@ -56,7 +56,7 @@ export const SidebarProjects = ({
               draggedItem === index
                 ? 'opacity-50'
                 : dragOverItem === index
-                ? '!border-white'
+                ? 'border-white!'
                 : 'bg-slate-900 hover:bg-slate-700'
             }`}
             draggable

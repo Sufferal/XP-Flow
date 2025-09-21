@@ -13,7 +13,6 @@ function useTodos() {
   const handleTodoAdd = newTodo => {
     setTodos(prevTodos => [...prevTodos, newTodo]);
   };
-  const unfinishedTodos = todos.filter(t => !t.isCompleted);
 
   const handleTodoEdit = updTodo => {
     const newTodos = todos.map(t => (t.id === updTodo.id ? updTodo : t));

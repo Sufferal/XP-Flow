@@ -1,6 +1,36 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/* @theme {
+  --color-slate-50: oklch(96.9% 0.015 12.422);
+  --color-slate-100: oklch(94.1% 0.03 12.58);
+  --color-slate-200: oklch(89.2% 0.058 10.001);
+  --color-slate-300: oklch(81% 0.117 11.638);
+  --color-slate-400: oklch(71.2% 0.194 13.428);
+  --color-slate-500: oklch(64.5% 0.246 16.439);
+  --color-slate-600: oklch(58.6% 0.253 17.585);
+  --color-slate-700: oklch(51.4% 0.222 16.935);
+  --color-slate-800: oklch(45.5% 0.188 13.697);
+  --color-slate-900: oklch(41% 0.159 10.272);
+  --color-slate-950: oklch(27.1% 0.105 12.094);
+} */
 
 :root {
   --modal-animation-duration: 0.4s;

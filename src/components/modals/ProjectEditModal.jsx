@@ -13,7 +13,7 @@ export const ProjectEditModal = ({ ref, item, onSubmit }) => {
       height={MODAL_PROJECT_HEIGHT}
       header={
         <div className="text-slate-900 font-semibold text-xl flex justify-between px-8 mt-6 mb-3">
-          <h2 className='text-2x'>Edit <span className='bg-slate-900 text-white rounded px-2'>{item.name}</span> project</h2>
+          <h2 className='text-2x'>Edit <span className='bg-slate-900 text-white rounded-sm px-2'>{item.name}</span> project</h2>
           <button onClick={handleClose} className='text-4xl'>&times;</button>
         </div>
       }

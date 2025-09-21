@@ -1,6 +1,6 @@
 export const VARIANT = {
   default: 'default',
-  outline: 'outline',
+  outline: 'outline-solid',
   danger: 'danger',
   icon: 'icon',
 };

@@ -7,6 +7,7 @@ import { EditIcon } from '../icons/EditIcon';
 import { SaveIcon } from '../icons/SaveIcon';
 import useAudio from '../../hooks/useAudio';
 import { SOUNDPACK } from '../../assets/audio';
+import { motion } from 'framer-motion';
 
 const Todo = ({ todo, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -21,6 +22,8 @@ const Todo = ({ todo, onEdit, onDelete }) => {
       playSound(SOUNDPACK.sfxDing);
     }
     setIsCompleted(prev => !prev);
+    // Delete when task is completed
+    onDelete();
   };
 
   const handleEdit = e => {
@@ -46,12 +49,9 @@ const Todo = ({ todo, onEdit, onDelete }) => {
   }, [todo.isCompleted]);
 
   useEffect(() => {
-    let timerId = setTimeout(() => {
-      if (todo.isCompleted !== isCompleted) {
-        onEdit({ ...todo, isCompleted });
-      }
-    }, 2000);
-    return () => clearTimeout(timerId);
+    if (todo.isCompleted !== isCompleted) {
+      onEdit({ ...todo, isCompleted });
+    }
   }, [isCompleted]);
 
   useEffect(() => {
@@ -61,7 +61,12 @@ const Todo = ({ todo, onEdit, onDelete }) => {
   }, [isEditing]);
 
   let todoContent = (
-    <div className="w-full flex items-center justify-between">
+    <motion.div
+      className="w-full flex items-center justify-between"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, x: -30 }}
+    >
       <h2
         className="font-semibold cursor-pointer max-w-[17rem] break-words"
         onClick={handleToggleCompleted}
@@ -84,17 +89,20 @@ const Todo = ({ todo, onEdit, onDelete }) => {
           <DeleteIcon width="24px" height="24px" color="#0F172A" />
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 
   if (isCompleted) {
     todoContent = (
-      <h2
+      <motion.h2
         className="max-w-[22rem] break-words italic font-semibold bg-slate-900 text-white w-full rounded px-2 py-1 cursor-pointer"
         onClick={handleToggleCompleted}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, x: -30 }}
       >
         {todo.name}
-      </h2>
+      </motion.h2>
     );
   }
 

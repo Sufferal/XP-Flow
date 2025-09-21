@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { LS_TODOS } from '../constants';
 import {
   getLocalStorageItem,
@@ -13,6 +13,7 @@ function useTodos() {
   const handleTodoAdd = newTodo => {
     setTodos(prevTodos => [...prevTodos, newTodo]);
   };
+  const unfinishedTodos = todos.filter(t => !t.isCompleted);
 
   const handleTodoEdit = updTodo => {
     const newTodos = todos.map(t => (t.id === updTodo.id ? updTodo : t));
@@ -25,8 +26,7 @@ function useTodos() {
   };
 
   useEffect(() => {
-    const unfinishedTodos = todos.filter(t => !t.isCompleted);
-    setLocalStorageItem(LS_TODOS, unfinishedTodos);
+    setLocalStorageItem(LS_TODOS, todos);
   }, [todos]);
 
   return {

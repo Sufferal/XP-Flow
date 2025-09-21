@@ -1,6 +1,8 @@
+import { AnimatePresence } from 'motion/react';
 import TodoForm from '../forms/TodoForm';
 import Todo from '../todos/Todo';
 import { TodoActions } from '../todos/TodoActions';
+import { motion } from 'motion/react';
 
 export const ProjectContent = ({
   projectName,
@@ -24,14 +26,16 @@ export const ProjectContent = ({
       )}
       {currentTodos.length ? (
         <ul className="mt-5 mb-5 flex flex-col gap-2">
-          {currentTodos.map(todo => (
-            <Todo
-              key={todo.id}
-              todo={todo}
-              onEdit={onTodoEdit}
-              onDelete={() => onTodoDelete(todo.id)}
-            />
-          ))}
+          <AnimatePresence>
+            {currentTodos.map(todo => (
+              <Todo
+                key={todo.id}
+                todo={todo}
+                onEdit={onTodoEdit}
+                onDelete={() => onTodoDelete(todo.id)}
+              />
+            ))}
+          </AnimatePresence>
         </ul>
       ) : (
         <p className="my-5 italic font-semibold">

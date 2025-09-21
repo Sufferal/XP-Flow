@@ -1,3 +1,4 @@
+// Dota sounds
 import firstBlood from './01_firstblood.mp3';
 import doubleKill from './02_doublekill.mp3';
 import killingSpree from './03_killingspree.mp3';
@@ -12,6 +13,8 @@ import monsterKill from './11_monsterkill.mp3';
 import godLike from './12_godlike.mp3';
 import holyShit from './13_holyshit.mp3';
 import rampage from './14_rampage.mp3';
+
+// Other sounds
 import missionComplete from './mission_complete.mp3';
 import sekiroDeathblow from './sekiro_deathblow.mp3';
 import sekiroChill from './sekiro_chill.mp3';
@@ -21,6 +24,8 @@ import romanianSensors from './romanian_sensors.mp3';
 import ding from './ding.mp3';
 import hotlineBling from './hotline_bling.mp3';
 import churchBell from './church_bell.mp3';
+import amongUsReveal from './among_us_reveal.mp3';
+import portalRadio from './portal_radio.mp3';
 
 export const SOUNDPACK = {
   soundEffect1: firstBlood,
@@ -46,6 +51,8 @@ export const SOUNDPACK = {
   sfxDing: ding,
   sfxHotlineBling: hotlineBling,
   sfxChurchBell: churchBell,
+  sfxPortalRadio: portalRadio,
+  sfxAmongUsReveal: amongUsReveal,
 };
 
 export const SOUNDPACK_LENGTH = Object.keys(SOUNDPACK).length;

@@ -16,6 +16,10 @@ const Todo = ({ todo, onEdit, onDelete }) => {
   const editInputRef = useRef(null);
   const { playSound } = useAudio();
 
+  // CSS
+  const styles = getComputedStyle(document.documentElement);
+  const accentColor = styles.getPropertyValue('--color-slate-900');
+
   const handleToggleCompleted = () => {
     // Play sound only when it's not completed
     if (!isCompleted) {
@@ -79,14 +83,14 @@ const Todo = ({ todo, onEdit, onDelete }) => {
           onClick={handleEdit}
           className="[&:hover>svg]:fill-red-500"
         >
-          <EditIcon width="24px" height="24px" color="#0F172A" />
+          <EditIcon width="24px" height="24px" color={accentColor} />
         </Button>
         <Button
           variant={VARIANT.icon}
           onClick={onDelete}
           className="[&:hover>svg]:fill-red-500"
         >
-          <DeleteIcon width="24px" height="24px" color="#0F172A" />
+          <DeleteIcon width="24px" height="24px" color={accentColor} />
         </Button>
       </div>
     </motion.div>
@@ -120,8 +124,12 @@ const Todo = ({ todo, onEdit, onDelete }) => {
             onBlur={handleEdit}
             onChange={e => setNewTodo(e.target.value)}
           />
-          <Button variant={VARIANT.icon} type="submit">
-            <SaveIcon width="16px" height="16px" color="#0F172A" />
+          <Button
+            variant={VARIANT.icon}
+            type="submit"
+            className="[&:hover>svg]:fill-red-500"
+          >
+            <SaveIcon width="16px" height="16px" color={accentColor} />
           </Button>
         </form>
       </div>

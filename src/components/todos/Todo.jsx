@@ -23,7 +23,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
   const handleToggleCompleted = () => {
     // Play sound only when it's not completed
     if (!isCompleted) {
-      playSound(SOUNDPACK.sfxDing);
+      playSound(SOUNDPACK.sfxAxeUlt);
     }
     setIsCompleted(prev => !prev);
     // Delete when task is completed

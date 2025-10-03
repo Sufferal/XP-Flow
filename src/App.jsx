@@ -1,19 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
-import {
-  KEYS,
-  LS_CURRENT_PROJECT,
-} from './constants';
+import { APP_MODES, KEYS, LS_APP_MODE, LS_CURRENT_PROJECT } from './constants';
 import { NoProjectSelected } from './components/projects/NoProjectSelected';
 import { SidebarProjects } from './components/sidebars/SidebarProjects';
 import { ProjectAddModal } from './components/modals/ProjectAddModal';
 import { Project } from './components/projects/Project';
 import useProjects from './hooks/useProjects';
-import { AudioProvider } from './store/AudioContext';
 import useKeyboardShortcut from './hooks/useKeyboardShortcut';
 import { getLocalStorageItem, setLocalStorageItem } from './utils/localStorage';
 import { TimerList } from './components/timers/TimerList';
 
 function App() {
+  const [appMode, setAppMode] = useState(
+    getLocalStorageItem(LS_APP_MODE) || APP_MODES.default
+  );
   const [currentProject, setCurrentProject] =
     useState(getLocalStorageItem(LS_CURRENT_PROJECT)) || null;
   const {
@@ -28,14 +27,42 @@ function App() {
   const addProjectRef = useRef(null);
   const addProjectHandler = () => addProjectRef.current.open();
 
+  const toggleAppMode = mode => {
+    setAppMode(prevMode =>
+      prevMode === APP_MODES.default ? mode : APP_MODES.default
+    );
+  };
+
+  const handleAppModeChange = () => {
+    const hasUserConfirmed = window.confirm(
+      'Are you sure you want to switch the app mode? All unsaved data will be lost.'
+    );
+    if (hasUserConfirmed) {
+      toggleAppMode(APP_MODES.focus);
+    }
+  };
+
   useKeyboardShortcut(KEYS.N, addProjectHandler);
+  useKeyboardShortcut(KEYS.F, handleAppModeChange);
 
   useEffect(() => {
     setLocalStorageItem(LS_CURRENT_PROJECT, currentProject);
   }, [currentProject]);
 
+  useEffect(() => {
+    setLocalStorageItem(LS_APP_MODE, appMode);
+  }, [appMode]);
+
+  if (appMode === APP_MODES.focus) {
+    return (
+      <div className="w-screen h-screen flex flex-col justify-center items-center gap-10">
+        <TimerList />
+      </div>
+    );
+  }
+
   return (
-    <AudioProvider>
+    <>
       <ProjectAddModal ref={addProjectRef} onSubmit={handleProjectAdd} />
       <main>
         <SidebarProjects
@@ -65,7 +92,7 @@ function App() {
           </div>
         </section>
       </main>
-    </AudioProvider>
+    </>
   );
 }
 

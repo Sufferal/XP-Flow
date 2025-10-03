@@ -21,8 +21,6 @@ const TodoForm = ({ category, onSubmit }) => {
     setUserTodo('');
   };
 
-  useKeyboardShortcut(KEYS.F, focusInput)
-
   return (
     <form onSubmit={submitHandler}>
       <Input

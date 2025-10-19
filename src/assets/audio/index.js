@@ -27,6 +27,8 @@ import hotlineBling from './hotline_bling.mp3';
 import churchBell from './church_bell.mp3';
 import amongUsReveal from './among_us_reveal.mp3';
 import portalRadio from './portal_radio.mp3';
+import aroundTheWorld from './around_the_world_la_la_la.mp3';
+import hollowKnightWah from './HK_wah_mushroom.mp3';
 
 export const SOUNDPACK = {
   soundEffect1: firstBlood,
@@ -55,6 +57,8 @@ export const SOUNDPACK = {
   sfxPortalRadio: portalRadio,
   sfxAmongUsReveal: amongUsReveal,
   sfxAxeUlt: axeUlt,
+  sfxAroundTheWorld: aroundTheWorld,
+  sfxHollowKnightWah: hollowKnightWah,
 };
 
 export const SOUNDPACK_LENGTH = Object.keys(SOUNDPACK).length;
